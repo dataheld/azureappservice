@@ -2,3 +2,12 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 [.]code-workspace$
+^codecov\.yml$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+Dockerfile
+^vignettes/
+^\.azure$
+man-roxygen
