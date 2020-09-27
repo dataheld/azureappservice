@@ -27,10 +27,6 @@ jobs:
           # see builder.Dockerfile for explanation, this resets after this step
           R_LIBS_SITE: $R_LIBS_RUNTIME_GH
         run: remotes::install_deps(dependencies = TRUE)
-      - name: Log in to Azure
-        uses: azure/login@v1.1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Check
         run: muggle::rcmdcheck2()
       - name: Test Coverage
