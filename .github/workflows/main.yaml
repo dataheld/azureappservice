@@ -36,7 +36,8 @@ jobs:
       - uses: docker/build-push-action@v1
         name: Build Buildtime Image
         with:
-          repository: ${{ github.repository }}/azureappservice-buildtime
+          # tag must be lowercase, so cannot be repo here
+          repository: subugoe/azureappservice/azureappservice-buildtime
           target: buildtime
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
