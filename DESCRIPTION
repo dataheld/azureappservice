@@ -1,6 +1,5 @@
 Package: AzureAppService
-Title: Deploy shiny applications and other R workloads to Azure
-    App Service
+Title: Deploy applications to Azure App Service
 Version: 0.0.0.9000
 Authors@R:
     c(person(given = "Maximilian",
@@ -10,7 +9,7 @@ Authors@R:
              comment = c(ORCID = "0000-0002-4703-5388")),
       person(given = c(subugoe = "Göttingen State and University Library"),
              role = c("cph", "fnd")))
-Description: Deployzing shiny applications and other R workloads
+Description: Deploying shiny applications and other R workloads
     to Azure App Service.
 License: MIT + file LICENSE
 URL: https://subugoe.github.io/AzureAppService,
@@ -20,15 +19,18 @@ Imports:
     processx (>= 3.4.3),
     cli (>= 2.0.2),
     checkmate (>= 2.0.0),
-    htmltools (>= 0.5.0),
     jsonlite (>= 1.7.0)
 Suggests:
     testthat,
     subugoetheme,
-    shinycaas
+    shinycaas,
+    httr (>= 1.4.2),
+    gh (>= 1.1.0),
+    fs (>= 1.5.0),
+    withr (>= 2.3.0)
 Remotes:
     subugoe/subugoetheme@1.0.0,
-    subugoe/shinycaas
+    subugoe/shinycaas@836b50199ed8b48dd7dccf479ed4f0fb4238e6d1
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
