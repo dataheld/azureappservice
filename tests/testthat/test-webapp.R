@@ -1,4 +1,5 @@
 test_that(desc = desc <- "webapp can be created", {
+  skip_on_ci()
   local_az_configure(make_testappname(desc))
   local_az_webapp_create()
   expect_equal(
@@ -8,6 +9,7 @@ test_that(desc = desc <- "webapp can be created", {
 })
 
 test_that(desc = desc <- "deployment slot can be created", {
+  skip_on_ci()
   local_az_configure(make_testappname(desc))
   local_az_webapp_create()
   suppressMessages(az_webapp_deployment_slot_create(slot = "foo"))
@@ -19,6 +21,7 @@ test_that(desc = desc <- "deployment slot can be created", {
 })
 
 test_that(desc = desc <- "update works", {
+  skip_on_ci()
   local_az_configure(make_testappname(desc))
   local_az_webapp_create()
   suppressMessages(az_webapp_update())
@@ -27,6 +30,7 @@ test_that(desc = desc <- "update works", {
 })
 
 test_that(desc = desc <- "config can be set", {
+  skip_on_ci()
   local_az_configure(make_testappname(desc))
   local_az_webapp_create()
   suppressMessages(az_webapp_config_set())
@@ -37,6 +41,7 @@ test_that(desc = desc <- "config can be set", {
 })
 
 test_that(desc = desc <- "config container can be set", {
+  skip_on_ci()
   local_az_configure(make_testappname(desc))
   local_az_webapp_create()
   suppressMessages(az_webapp_config_container_set(
@@ -46,6 +51,7 @@ test_that(desc = desc <- "config container can be set", {
 })
 
 test_that(desc = desc <- "config appsettings can be set", {
+  skip_on_ci()
   local_az_configure(make_testappname(desc))
   local_az_webapp_create()
   az_webapp_config_appsettings_set()
