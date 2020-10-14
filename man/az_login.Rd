@@ -10,14 +10,18 @@ az_login(...)
 \item{...}{
   Arguments passed on to \code{\link[=az_cli_run]{az_cli_run}}
   \describe{
-    \item{\code{cmd}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
-    \item{\code{req}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
-    \item{\code{opt}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
-    \item{\code{add}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
+    \item{\code{cmd}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
+    \item{\code{req}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
+    \item{\code{opt}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
+    \item{\code{add}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
     \item{\code{echo_cmd}}{Whether to print the command to run to the screen.}
     \item{\code{echo}}{Whether to print the standard output and error
 to the screen. Note that the order of the standard output and error

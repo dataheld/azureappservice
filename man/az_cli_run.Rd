@@ -2,6 +2,7 @@
 % Please edit documentation in R/cli.R
 \name{az_cli_run}
 \alias{az_cli_run}
+\alias{az_cli_run_slot}
 \title{Run Azure CLI
 Wraps the \href{https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest}{Azure Command-Line Interface (CLI)}.}
 \usage{
@@ -10,14 +11,18 @@ az_cli_run(
   req = NULL,
   opt = NULL,
   add = NULL,
+  extra = NULL,
   echo_cmd = FALSE,
   echo = FALSE,
   ...
 )
+
+az_cli_run_slot(slot, ...)
 }
 \arguments{
-\item{cmd, req, opt, add}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
+\item{cmd, req, opt, add}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
 
 \item{echo_cmd}{Whether to print the command to run to the screen.}
 
@@ -32,6 +37,10 @@ because they are used internally by \code{run()}. You can use the
 \code{stdout_callback}, \code{stderr_callback}, etc. arguments to manage
 the standard output and error, or the \link[processx]{process} class directly
 if you need more flexibility.}
+
+\item{slot}{The name of the \href{https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots}{deployment slot}.
+Defaults to the production slot if not specified.
+Only available for higher app service plan tiers.}
 }
 \value{
 (invisible) \code{stdout} parsed through \code{\link[jsonlite:fromJSON]{jsonlite::fromJSON()}}
@@ -40,3 +49,9 @@ if you need more flexibility.}
 Run Azure CLI
 Wraps the \href{https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest}{Azure Command-Line Interface (CLI)}.
 }
+\section{Functions}{
+\itemize{
+\item \code{az_cli_run_slot}: Run Azure CLI command with slot parameter (mostly \code{webapp} commands)
+}}
+
+\keyword{internal}

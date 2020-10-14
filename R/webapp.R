@@ -1,3 +1,5 @@
+# wrapper ====
+
 #' Manage web apps
 #'
 #' @param restart whether to restart the web app.
@@ -9,14 +11,17 @@
 az_webapp <- function(slot = NULL, restart = TRUE,
                       ...) {
   checkmate::assert_flag(restart)
+  # same order as below
   az_webapp_create(...)
   if (!is.null(slot)) az_webapp_deployment_slot_create(slot = slot, ...)
-  az_webapp_config_container_set(slot = slot, ...)
   az_webapp_update(slot = slot, ...)
   az_webapp_config_set(slot = slot, ...)
+  az_webapp_config_container_set(slot = slot, ...)
   az_webapp_config_appsettings_set(slot = slot, ...)
   if (restart) az_webapp_restart(slot = slot, ...)
 }
+
+# create ====
 
 #' @describeIn az_webapp Create a web app
 #'
@@ -38,14 +43,14 @@ az_webapp <- function(slot = NULL, restart = TRUE,
 #' The following `startup-file`s are *invalid*:
 #' - `"Rscript -e 1 + 1"` (spaces inside `[EXPR]`)
 #' - `"Rscript -e '1+1'"` (quoting of `[EXPR]` would be treated as `"Rscript -e '\"1+1\"'"`).
-az_webapp_create <- function(name = NULL,
+az_webapp_create <- function(name = az_configure_list()$name,
                              plan,
                              resource_group = NULL,
                              deployment_container_image_name,
                              startup_file = NULL,
                              subscription = NULL,
                              ...) {
-  checkmate::assert_string(name, null.ok = TRUE)
+  checkmate::assert_string(name, null.ok = FALSE)
   checkmate::assert_string(plan, null.ok = FALSE)
   checkmate::assert_string(resource_group, null.ok = TRUE)
   checkmate::assert_string(deployment_container_image_name, null.ok = FALSE)
@@ -71,13 +76,11 @@ az_webapp_create <- function(name = NULL,
 }
 
 #' @describeIn az_webapp Delete a web app
-az_webapp_delete <- function(name = NULL, slot = NULL, ...) {
-  az_cli_run(
+az_webapp_delete <- function(name = az_configure_list()$name, slot = NULL, ...) {
+  az_cli_run_slot(
     cmd = c("webapp", "delete"),
-    opt = c(
-      if (!is.null(name)) c("--name", name),
-      if (!is.null(slot)) c("--slot", slot)
-    ),
+    req = c("--name", name),
+    slot = slot,
     ...
   )
 }
@@ -89,14 +92,14 @@ az_webapp_list <- function(...) {
 
 #' @describeIn az_webapp Gets the details of a web app
 az_webapp_show <- function(slot = NULL, ...) {
-  az_cli_run(
+  az_cli_run_slot(
     cmd = c("webapp", "show"),
-    opt = c(
-      if (!is.null(slot)) c("--slot", slot)
-    ),
+    slot = slot,
     ...
   )
 }
+
+# slots ====
 
 #' @describeIn az_webapp Create a deployment slot
 #'
@@ -104,22 +107,80 @@ az_webapp_show <- function(slot = NULL, ...) {
 #' The name of the [deployment slot](https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots).
 #' Defaults to the production slot if not specified.
 #' Only available for higher app service plan tiers.
-az_webapp_deployment_slot_create <- function(name = NULL,
+az_webapp_deployment_slot_create <- function(name = az_configure_list()$name,
                                              resource_group = NULL,
                                              slot,
                                              ...) {
+  checkmate::assert_string(name, null.ok = FALSE)
   checkmate::assert_string(slot, null.ok = FALSE)
   cli::cli_alert_info("Creating deployment slot ...")
   az_cli_run(
     cmd = c("webapp", "deployment", "slot", "create"),
     req = c(
-      if (!is.null(name)) c("--name", name),
+      "--name", name,
       if (!is.null(resource_group)) c("--resource-group", resource_group),
       "--slot", slot
     ),
     ...
   )
 }
+
+#' @describeIn az_webapp List all deployment slots
+az_webapp_deployment_slot_list <-  function(name = az_configure_list()$name, ...) {
+  checkmate::assert_string(name, null.ok = FALSE)
+  az_cli_run(
+    cmd = c("webapp", "deployment", "slot", "list"),
+    req = c("--name", name),
+    ...
+  )
+}
+
+# update ====
+
+#' @describeIn az_webapp Update a web app
+az_webapp_update <- function(slot = NULL, ...) {
+  cli::cli_alert_info("Setting web app tags ...")
+  # for some reason, this is not part of the webapp config, though it is on portal.azure.com
+  az_cli_run_slot(
+    cmd = c("webapp", "update"),
+    opt = c(
+      "--client-affinity-enabled", "true", # send traffic to same machine
+      "--https-only", "true"
+    ),
+    slot = slot,
+    ...
+  )
+}
+
+# config ====
+
+#' @describeIn az_webapp Set a web app's configuration
+az_webapp_config_set <- function(slot = NULL, ...) {
+  cli::cli_alert_info("Setting web app configuration ...")
+  az_cli_run_slot(
+    cmd = c("webapp", "config", "set"),
+    opt = c(
+      "--always-on", "true",
+      "--ftps-state", "disabled", # not needed
+      "--web-sockets-enabled", "true", # needed to serve shiny
+      "--http20-enabled", "true",
+      "--min-tls-version", "1.2"
+    ),
+    slot = slot,
+    ...
+  )
+}
+
+#' @describeIn az_webapp Get the details of a web app's configuration
+az_webapp_config_show <- function(slot = NULL, ...) {
+  az_cli_run_slot(
+    cmd = c("webapp", "config", "show"),
+    slot = slot,
+    ...
+  )
+}
+
+# container ====
 
 #' @describeIn az_webapp Set a web app container's settings
 #'
@@ -149,7 +210,7 @@ az_webapp_config_container_set <- function(deployment_container_image_name,
   checkmate::assert_string(docker_registry_server_user, null.ok = TRUE)
   checkmate::assert_string(docker_registry_server_password, null.ok = TRUE)
   cli::cli_alert_info("Setting web app container settings ...")
-  az_cli_run(
+  az_cli_run_slot(
     cmd = c("webapp", "config", "container", "set"),
     opt = c(
       # redundant, container is already set above, but safer\
@@ -163,84 +224,74 @@ az_webapp_config_container_set <- function(deployment_container_image_name,
       },
       if (!is.null(docker_registry_server_password)) {
         c("--docker-registry-server-password", docker_registry_server_password)
-      },
-      if (!is.null(slot)) c("--slot", slot)
-    ),
-    ...
-  )
-}
-
-#' @describeIn az_webapp Update a web app
-az_webapp_update <- function(slot = NULL, ...) {
-  cli::cli_alert_info("Setting web app tags ...")
-  # for some reason, this is not part of the webapp config, though it is on portal.azure.com
-  az_cli_run(
-    cmd = c("webapp", "update"),
-    opt = c(
-      "--client-affinity-enabled", "true", # send traffic to same machine
-      "--https-only", "true",
-      if (!is.null(slot)) {
-        c("--slot", slot)
       }
     ),
-    ...
-  )
-}
-
-#' @describeIn az_webapp Set a web app's configuration
-az_webapp_config_set <- function(slot = NULL, ...) {
-  cli::cli_alert_info("Setting web app configuration ...")
-  az_cli_run(
-    cmd = c("webapp", "config", "set"),
-    opt = c(
-      "--always-on", "true",
-      "--ftps-state", "disabled", # not needed
-      "--web-sockets-enabled", "true", # needed to serve shiny
-      "--http20-enabled", "true",
-      "--min-tls-version", "1.2",
-      if (!is.null(slot)) c("--slot", slot)
-    ),
+    slot = slot,
     ...
   )
 }
 
 #' @describeIn az_webapp Get details of a web app container's settings
 az_webapp_config_container_show <- function(slot = NULL, ...) {
-  az_cli_run(
+  az_cli_run_slot(
     cmd = c("webapp", "config", "container", "show"),
-    opt = c(if (!is.null(slot)) c("--slot", slot)),
+    slot = slot,
     ...
   )
 }
+
+# config appsettings ====
 
 #' @describeIn az_webapp Set a web app's settings
 az_webapp_config_appsettings_set <- function(slot = NULL, ...) {
   # weirdly this cannot be set in the above
-  az_cli_run(
+  az_cli_run_slot(
     cmd = c("webapp", "config", "appsettings", "set"),
     opt = c(
-      "--settings", "DOCKER_ENABLE_CI=false",
-      if (!is.null(slot)) c("--slot", slot)
+      "--settings", "DOCKER_ENABLE_CI=false"
     ),
+    slot = slot,
     ...
   )
 }
 
+#' @describeIn az_webapp Get the details of a web app's settings
+az_webapp_config_appsettings_list <- function(slot = NULL, ...) {
+  az_cli_run_slot(
+    cmd = c("webapp", "config", "appsettings", "list"),
+    slot = slot,
+    ...
+  )
+}
+
+#' @describeIn az_webapp Delete web app settings
+az_webapp_config_appsettings_delete <- function(slot = NULL, ...) {
+  az_cli_run_slot(
+    cmd = c("webapp", "config", "appsettings", "delete"),
+    req = c("--setting-names", "DOCKER_ENABLE_CI"),
+    slot = slot,
+    ...
+  )
+}
+
+# helpers ====
+
 #' @describeIn az_webapp Restarts the web app
 az_webapp_restart <- function(slot = NULL, ...) {
   cli::cli_alert_info("Restaring web app ...")
-  az_cli_run(
+  az_cli_run_slot(
     cmd = c("webapp", "restart"),
-    opt = c(if (!is.null(slot)) c("--slot", slot)),
+    slot = slot,
     ...
   )
 }
 
 #' @describeIn az_webapp Open a web app in a browser
 az_webapp_browse <- function(slot = NULL, ...) {
+  cli::cli_alert_info("Opening web app in browser ...")
   az_cli_run(
     cmd = c("webapp", "browse"),
-    opt = c(if (!is.null(slot)) c("--slot", slot)),
+    slot = slot,
     ...
   )
 }

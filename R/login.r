@@ -6,7 +6,6 @@
 #'
 #' @export
 az_login <- function(...) {
-  stopifnot(interactive())
   az_cli_run(
     cmd = "login",
     ...

@@ -7,11 +7,15 @@
 \alias{az_webapp_list}
 \alias{az_webapp_show}
 \alias{az_webapp_deployment_slot_create}
-\alias{az_webapp_config_container_set}
+\alias{az_webapp_deployment_slot_list}
 \alias{az_webapp_update}
 \alias{az_webapp_config_set}
+\alias{az_webapp_config_show}
+\alias{az_webapp_config_container_set}
 \alias{az_webapp_config_container_show}
 \alias{az_webapp_config_appsettings_set}
+\alias{az_webapp_config_appsettings_list}
+\alias{az_webapp_config_appsettings_delete}
 \alias{az_webapp_restart}
 \alias{az_webapp_browse}
 \title{Manage web apps}
@@ -19,7 +23,7 @@
 az_webapp(slot = NULL, restart = TRUE, ...)
 
 az_webapp_create(
-  name = NULL,
+  name = az_configure_list()$name,
   plan,
   resource_group = NULL,
   deployment_container_image_name,
@@ -28,13 +32,26 @@ az_webapp_create(
   ...
 )
 
-az_webapp_delete(name = NULL, slot = NULL, ...)
+az_webapp_delete(name = az_configure_list()$name, slot = NULL, ...)
 
 az_webapp_list(...)
 
 az_webapp_show(slot = NULL, ...)
 
-az_webapp_deployment_slot_create(name = NULL, resource_group = NULL, slot, ...)
+az_webapp_deployment_slot_create(
+  name = az_configure_list()$name,
+  resource_group = NULL,
+  slot,
+  ...
+)
+
+az_webapp_deployment_slot_list(name = az_configure_list()$name, ...)
+
+az_webapp_update(slot = NULL, ...)
+
+az_webapp_config_set(slot = NULL, ...)
+
+az_webapp_config_show(slot = NULL, ...)
 
 az_webapp_config_container_set(
   deployment_container_image_name,
@@ -45,13 +62,13 @@ az_webapp_config_container_set(
   ...
 )
 
-az_webapp_update(slot = NULL, ...)
-
-az_webapp_config_set(slot = NULL, ...)
-
 az_webapp_config_container_show(slot = NULL, ...)
 
 az_webapp_config_appsettings_set(slot = NULL, ...)
+
+az_webapp_config_appsettings_list(slot = NULL, ...)
+
+az_webapp_config_appsettings_delete(slot = NULL, ...)
 
 az_webapp_restart(slot = NULL, ...)
 
@@ -67,14 +84,18 @@ Only available for higher app service plan tiers.}
 \item{...}{
   Arguments passed on to \code{\link[=az_cli_run]{az_cli_run}}
   \describe{
-    \item{\code{cmd}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
-    \item{\code{req}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
-    \item{\code{opt}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
-    \item{\code{add}}{Command, required, optional, additional parameters, as for \code{\link[processx:run]{processx::run()}}
-\code{add} parameters are reserved for the user to pass down additional arguments.}
+    \item{\code{cmd}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
+    \item{\code{req}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
+    \item{\code{opt}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
+    \item{\code{add}}{Command, required, optional, additional, extra parameters, as for \code{\link[processx:run]{processx::run()}}
+\code{add} parameters are reserved for the user to pass down additional arguments to the Azure CLI.
+\code{extra} parameters are reserved for internal use.}
     \item{\code{echo_cmd}}{Whether to print the command to run to the screen.}
     \item{\code{echo}}{Whether to print the standard output and error
 to the screen. Note that the order of the standard output and error
@@ -142,15 +163,23 @@ Manage web apps
 
 \item \code{az_webapp_deployment_slot_create}: Create a deployment slot
 
-\item \code{az_webapp_config_container_set}: Set a web app container's settings
+\item \code{az_webapp_deployment_slot_list}: List all deployment slots
 
 \item \code{az_webapp_update}: Update a web app
 
 \item \code{az_webapp_config_set}: Set a web app's configuration
 
+\item \code{az_webapp_config_show}: Get the details of a web app's configuration
+
+\item \code{az_webapp_config_container_set}: Set a web app container's settings
+
 \item \code{az_webapp_config_container_show}: Get details of a web app container's settings
 
 \item \code{az_webapp_config_appsettings_set}: Set a web app's settings
+
+\item \code{az_webapp_config_appsettings_list}: Get the details of a web app's settings
+
+\item \code{az_webapp_config_appsettings_delete}: Delete web app settings
 
 \item \code{az_webapp_restart}: Restarts the web app
 

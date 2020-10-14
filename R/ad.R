@@ -83,7 +83,7 @@ az_ad_sp_create_for_rbac <- function(name = get_ghactions_url(),
 #' @param provider Specific Azure resource and its name to scope down to (such as a webapp).
 #' Defaults to a web app named via [az_configure()].
 #' Set to `NULL` to skip (not recommended).
-scope_down <- function(subscription = az_account_show("subugoe")$id,
+scope_down <- function(subscription = az_account_show()$id,
                        resource_group = az_configure_list()$resource_group,
                        provider = paste(
                          "Microsoft.Web", "sites", az_configure_list()$name,
