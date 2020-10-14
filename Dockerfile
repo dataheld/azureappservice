@@ -1,2 +1,2 @@
-ARG MUGGLE_TAG=a94fcb785886af96d440b4bcd7f47c01162d7f5e
+ARG MUGGLE_TAG=9cdb59ad8257fc1757db19ee0f976bbf8c071f70
 FROM subugoe/muggle-buildtime-onbuild:${MUGGLE_TAG} as buildtime
