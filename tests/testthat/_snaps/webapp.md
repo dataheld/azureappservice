@@ -6,10 +6,18 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["alwaysOn", "apiDefinition", "apiManagementConfig", "appCommandLine", "appSettings", "autoHealEnabled", "autoHealRules", "autoSwapSlotName", "connectionStrings", "cors", "defaultDocuments", "detailedErrorLoggingEnabled", "documentRoot", "experiments", "ftpsState", "handlerMappings", "healthCheckPath", "http20Enabled", "httpLoggingEnabled", "ipSecurityRestrictions", "javaContainer", "javaContainerVersion", "javaVersion", "kind", "limits", "linuxFxVersion", "loadBalancing", "localMySqlEnabled", "location", "logsDirectorySizeLimit", "machineKey", "managedPipelineMode", "managedServiceIdentityId", "minTlsVersion", "netFrameworkVersion", "nodeVersion", "numberOfWorkers", "phpVersion", "powerShellVersion", "preWarmedInstanceCount", "push", "pythonVersion", "remoteDebuggingEnabled", "remoteDebuggingVersion", "requestTracingEnabled", "requestTracingExpirationTime", "resourceGroup", "scmIpSecurityRestrictions", "scmIpSecurityRestrictionsUseMain", "scmType", "tracingOptions", "type", "use32BitWorkerProcess", "virtualApplications", "vnetName", "webSocketsEnabled", "windowsFxVersion", "xManagedServiceIdentityId"]
+          "value": ["acrUseManagedIdentityCreds", "acrUserManagedIdentityId", "alwaysOn", "apiDefinition", "apiManagementConfig", "appCommandLine", "appSettings", "autoHealEnabled", "autoHealRules", "autoSwapSlotName", "connectionStrings", "cors", "defaultDocuments", "detailedErrorLoggingEnabled", "documentRoot", "experiments", "ftpsState", "handlerMappings", "healthCheckPath", "http20Enabled", "httpLoggingEnabled", "ipSecurityRestrictions", "javaContainer", "javaContainerVersion", "javaVersion", "kind", "limits", "linuxFxVersion", "loadBalancing", "localMySqlEnabled", "location", "logsDirectorySizeLimit", "machineKey", "managedPipelineMode", "managedServiceIdentityId", "minTlsVersion", "netFrameworkVersion", "nodeVersion", "numberOfWorkers", "phpVersion", "powerShellVersion", "preWarmedInstanceCount", "push", "pythonVersion", "remoteDebuggingEnabled", "remoteDebuggingVersion", "requestTracingEnabled", "requestTracingExpirationTime", "resourceGroup", "scmIpSecurityRestrictions", "scmIpSecurityRestrictionsUseMain", "scmType", "tracingOptions", "type", "use32BitWorkerProcess", "virtualApplications", "vnetName", "webSocketsEnabled", "windowsFxVersion", "xManagedServiceIdentityId"]
         }
       },
       "value": [
+        {
+          "type": "logical",
+          "attributes": {},
+          "value": [false]
+        },
+        {
+          "type": "NULL"
+        },
         {
           "type": "logical",
           "attributes": {},
