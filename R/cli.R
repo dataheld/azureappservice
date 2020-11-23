@@ -33,6 +33,7 @@ az_cli_run <- function(cmd,
 #' @describeIn az_cli_run Run Azure CLI command with slot parameter (mostly `webapp` commands)
 #' @keywords internal
 #' @inheritParams az_webapp_deployment_slot_create
+#' @export
 az_cli_run_slot <- function(slot, ...) {
   az_cli_run(extra = c(if (!is.null(slot)) c("--slot", slot)), ...)
 }

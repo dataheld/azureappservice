@@ -22,12 +22,14 @@ az_account <- function(subscription = NULL, ...) {
 }
 
 #' @describeIn az_account Get a list of subscriptions for the logged in account.
+#' @export
 az_account_list <- function(...) {
   az_cli_run(cmd = c("account", "list"), ...)
 }
 
 #' @describeIn az_account Get the details of a subscription.
 #' If the subscription isn't specified, shows the details of the default subscription.
+#' @export
 az_account_show <- function(subscription = NULL, ...) {
   az_cli_run(
     cmd = c("account", "show"),
@@ -50,6 +52,7 @@ az_account_show <- function(subscription = NULL, ...) {
 #' However, depending your applicable context and policies, you may want to provide this argument as a secret.
 #'
 #' To find out which subscriptions you are currently authorised to use, run `print(az_account_list())`.
+#' @export
 az_account_set <- function(subscription, ...) {
   checkmate::assert_string(subscription)
   cli::cli_alert_info("Setting subscription ...")

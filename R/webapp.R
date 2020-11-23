@@ -43,6 +43,7 @@ az_webapp <- function(slot = NULL, restart = TRUE,
 #' The following `startup-file`s are *invalid*:
 #' - `"Rscript -e 1 + 1"` (spaces inside `[EXPR]`)
 #' - `"Rscript -e '1+1'"` (quoting of `[EXPR]` would be treated as `"Rscript -e '\"1+1\"'"`).
+#' @export
 az_webapp_create <- function(name = az_configure_list()$name,
                              plan,
                              resource_group = NULL,
@@ -76,6 +77,7 @@ az_webapp_create <- function(name = az_configure_list()$name,
 }
 
 #' @describeIn az_webapp Delete a web app
+#' @export
 az_webapp_delete <- function(name = az_configure_list()$name, slot = NULL, ...) {
   az_cli_run_slot(
     cmd = c("webapp", "delete"),
@@ -86,6 +88,7 @@ az_webapp_delete <- function(name = az_configure_list()$name, slot = NULL, ...) 
 }
 
 #' @describeIn az_webapp List web apps
+#' @export
 az_webapp_list <- function(...) {
   az_cli_run(cmd = c("webapp", "list"), ...)
 }
@@ -107,6 +110,7 @@ az_webapp_show <- function(slot = NULL, ...) {
 #' The name of the [deployment slot](https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots).
 #' Defaults to the production slot if not specified.
 #' Only available for higher app service plan tiers.
+#' @export
 az_webapp_deployment_slot_create <- function(name = az_configure_list()$name,
                                              resource_group = NULL,
                                              slot,
@@ -126,6 +130,7 @@ az_webapp_deployment_slot_create <- function(name = az_configure_list()$name,
 }
 
 #' @describeIn az_webapp List all deployment slots
+#' @export
 az_webapp_deployment_slot_list <-  function(name = az_configure_list()$name, ...) {
   checkmate::assert_string(name, null.ok = FALSE)
   az_cli_run(
@@ -138,6 +143,7 @@ az_webapp_deployment_slot_list <-  function(name = az_configure_list()$name, ...
 # update ====
 
 #' @describeIn az_webapp Update a web app
+#' @export
 az_webapp_update <- function(slot = NULL, ...) {
   cli::cli_alert_info("Setting web app tags ...")
   # for some reason, this is not part of the webapp config, though it is on portal.azure.com
@@ -155,6 +161,7 @@ az_webapp_update <- function(slot = NULL, ...) {
 # config ====
 
 #' @describeIn az_webapp Set a web app's configuration
+#' @export
 az_webapp_config_set <- function(slot = NULL, ...) {
   cli::cli_alert_info("Setting web app configuration ...")
   az_cli_run_slot(
@@ -172,6 +179,7 @@ az_webapp_config_set <- function(slot = NULL, ...) {
 }
 
 #' @describeIn az_webapp Get the details of a web app's configuration
+#' @export
 az_webapp_config_show <- function(slot = NULL, ...) {
   az_cli_run_slot(
     cmd = c("webapp", "config", "show"),
@@ -199,6 +207,7 @@ az_webapp_config_show <- function(slot = NULL, ...) {
 #' Credentials for private container registries.
 #' Defaults to `NULL` for public registries.
 #' Do not expose your credentials in public code; it's best to use secret environment variables.
+#' @export
 az_webapp_config_container_set <- function(deployment_container_image_name,
                                            docker_registry_server_url = NULL,
                                            docker_registry_server_user = NULL,
@@ -232,6 +241,7 @@ az_webapp_config_container_set <- function(deployment_container_image_name,
 }
 
 #' @describeIn az_webapp Get details of a web app container's settings
+#' @export
 az_webapp_config_container_show <- function(slot = NULL, ...) {
   az_cli_run_slot(
     cmd = c("webapp", "config", "container", "show"),
@@ -243,6 +253,7 @@ az_webapp_config_container_show <- function(slot = NULL, ...) {
 # config appsettings ====
 
 #' @describeIn az_webapp Set a web app's settings
+#' @export
 az_webapp_config_appsettings_set <- function(slot = NULL, ...) {
   # weirdly this cannot be set in the above
   az_cli_run_slot(
@@ -256,6 +267,7 @@ az_webapp_config_appsettings_set <- function(slot = NULL, ...) {
 }
 
 #' @describeIn az_webapp Get the details of a web app's settings
+#' @export
 az_webapp_config_appsettings_list <- function(slot = NULL, ...) {
   az_cli_run_slot(
     cmd = c("webapp", "config", "appsettings", "list"),
@@ -265,6 +277,7 @@ az_webapp_config_appsettings_list <- function(slot = NULL, ...) {
 }
 
 #' @describeIn az_webapp Delete web app settings
+#' @export
 az_webapp_config_appsettings_delete <- function(slot = NULL, ...) {
   az_cli_run_slot(
     cmd = c("webapp", "config", "appsettings", "delete"),
@@ -277,6 +290,7 @@ az_webapp_config_appsettings_delete <- function(slot = NULL, ...) {
 # helpers ====
 
 #' @describeIn az_webapp Restarts the web app
+#' @export
 az_webapp_restart <- function(slot = NULL, ...) {
   cli::cli_alert_info("Restaring web app ...")
   az_cli_run_slot(
@@ -287,6 +301,7 @@ az_webapp_restart <- function(slot = NULL, ...) {
 }
 
 #' @describeIn az_webapp Open a web app in a browser
+#' @export
 az_webapp_browse <- function(slot = NULL, ...) {
   cli::cli_alert_info("Opening web app in browser ...")
   az_cli_run(

@@ -62,6 +62,7 @@ az_configure <- function(name = NULL, resource_group = NULL, ...) {
 }
 
 #' @describeIn az_configure List defaults
+#' @export
 az_configure_list <- function(...) {
   output <- list(
     resource_group = NULL,
