@@ -27,7 +27,7 @@ Imports:
     checkmate (>= 2.0.0),
     jsonlite (>= 1.7.0)
 Suggests:
-    testthat,
+    testthat (>= 3.0.0),
     subugoetheme,
     shinycaas,
     httr (>= 1.4.2),
@@ -36,8 +36,7 @@ Suggests:
     withr (>= 2.3.0)
 Remotes:
     subugoe/subugoetheme@1.0.0,
-    subugoe/shinycaas@836b50199ed8b48dd7dccf479ed4f0fb4238e6d1,
-    r-lib/testthat@3b0b9703290f57a155c81e1e0b1e10e670811ad9
+    subugoe/shinycaas@836b50199ed8b48dd7dccf479ed4f0fb4238e6d1
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
