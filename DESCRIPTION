@@ -29,14 +29,12 @@ Imports:
 Suggests:
     testthat (>= 3.0.0),
     subugoetheme,
-    shinycaas,
     httr (>= 1.4.2),
     gh (>= 1.1.0),
     fs (>= 1.5.0),
     withr (>= 2.3.0)
 Remotes:
-    subugoe/subugoetheme@1.0.0,
-    subugoe/shinycaas@836b50199ed8b48dd7dccf479ed4f0fb4238e6d1
+    subugoe/subugoetheme@1.1.1
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
