@@ -64,7 +64,7 @@ jobs:
     needs: build-and-push-images
     runs-on: ubuntu-20.04
     container:
-      image: ghcr.io/${{ github.repository }}/builder:${{ github.sha }}
+      image: ghcr.io/azureappservice/builder:${{ github.sha }}
     strategy:
       fail-fast: false
       matrix:
