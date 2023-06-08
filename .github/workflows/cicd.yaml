@@ -43,19 +43,19 @@ jobs:
           # TODO this should done by metadata-action,
           # but is currently unsupported
           images: "i-am-ignored"
-      - name: "Bake Builder Image"
+      - name: "Bake Images"
         run: |
           make bake \
-            bake_args="--file ${{ steps.meta.outputs.bake-file }} builder" \
+            bake_args="--file ${{ steps.meta.outputs.bake-file }}" \
             tag_from_git_sha="${{ github.sha }}" \
             git_ref_name="${{ github.ref_name }}"
       - name: "Smoke Test Builder Image"
         run: |
           make smoke-test-builder git_ref_name="${{ github.ref_name }}"
-      - name: "Push Builder Image"
+      - name: "Push Images"
         run: |
           make bake \
-            bake_args="--file ${{ steps.meta.outputs.bake-file }} builder" \
+            bake_args="--file ${{ steps.meta.outputs.bake-file }}" \
             tag_from_git_sha="${{ github.sha }}" \
             git_ref_name="${{ github.ref_name }}" \
             can_push=true
