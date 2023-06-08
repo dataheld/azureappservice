@@ -18,8 +18,7 @@ URL: https://maxheld.de/AzureAppService,
     https://github.com/maxheld83/AzureAppService
 BugReports: https://github.com/maxheld83/AzureAppService/issues
 Imports:
-    AzureRMR,
-    magrittr
+    AzureRMR
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -27,3 +26,5 @@ RoxygenNote: 7.1.1
 SystemRequirements: Azure CLI (>= 2.9) (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 Config/testthat/edition: 3
 Config/testthat/parallel: false
+Suggests: 
+    dotenv
