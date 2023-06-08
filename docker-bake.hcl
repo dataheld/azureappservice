@@ -46,8 +46,7 @@ function "compose_cache_from_field" {
 
 group "default" {
   targets = [
-    "from-r-ver",
-    "from-rstudio"
+    "from-r-ver"
   ]
 }
 
