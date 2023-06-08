@@ -9,32 +9,17 @@ Authors@R:
         role = c("aut", "cre"),
         email = "info@maxheld.de",
         comment = c(ORCID = "0000-0002-4703-5388")
-      ),
-      person(
-        given = "Göttingen State and University Library",
-        role = c("cph", "fnd")
       )
     )
 Description: Deploying shiny applications and other R workloads
     to Azure App Service.
 License: MIT + file LICENSE
-URL: https://subugoe.github.io/AzureAppService,
-    https://github.com/subugoe/AzureAppService
-BugReports: https://github.com/subugoe/AzureAppService/issues
+URL: https://maxheld.de/AzureAppService,
+    https://github.com/maxheld83/AzureAppService
+BugReports: https://github.com/maxheld83/AzureAppService/issues
 Imports:
-    processx (>= 3.4.3),
-    cli (>= 2.0.2),
-    checkmate (>= 2.0.0),
-    jsonlite (>= 1.7.0)
-Suggests:
-    testthat (>= 3.0.0),
-    subugoetheme,
-    httr (>= 1.4.2),
-    gh (>= 1.1.0),
-    fs (>= 1.5.0),
-    withr (>= 2.3.0)
-Remotes:
-    subugoe/subugoetheme@1.1.1
+    AzureRMR,
+    magrittr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

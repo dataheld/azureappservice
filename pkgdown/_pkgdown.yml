@@ -1,11 +1,3 @@
 authors:
   Maximilian Held:
     href: https://www.maxheld.de
-  Göttingen State and University Library:
-    href: https://www.sub.uni-goettingen.de/
-template:
-  package: subugoetheme
-  params:
-    docsearch:
-      api_key: f03b793f1845a218d40eb430f1cbda5b
-      index_name: subugoe_azureAppService
