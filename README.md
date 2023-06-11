@@ -61,8 +61,24 @@ To authenticate via WIF, you need to complete two steps on the Azure side:
     All federated credentials on the same app registration
     use the same secrets as created in the above.
 
-At 
+::: {.alert .alert-info}
+At this point in the setup,
+the app you registered in the above has *no* assigned roles
+and cannot do anything on Azure.
+As a result,
+you may get this error message if you run the Azure Login GitHub Action:
 
+> ```
+> ERROR: (SubscriptionNotFound) The subscription '***' could not be found.`
+> Code: SubscriptionNotFound
+> ```
+
+This will be fixed below,
+where you'll give the app registration the necessary privileges.
+
+If you want to run the Azure Login GitHub Action as is,
+pass the `allow-no-subscriptions: true` argument.
+:::
 
 ### Prerequisites
 
