@@ -33,7 +33,7 @@ You first need to authenticate into Azure to be able to make changes to Azure re
 
 #### Local (Shell)
 
-[Sign in interactively](https://learn.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
+[Sign in interactively](https://learn.microsoft.com/en-us/cli/azure/authenticate-azure-cli)
 with Azure CLI.
 
 ```sh
