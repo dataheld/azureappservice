@@ -13,6 +13,16 @@ or would like a solution with a simpler way to control costs,
 consider Posit's [shinyapps.io](https://www.shinyapps.io).
 :::
 
+## Prerequisites
+
+- A **dockerised shiny app**.
+    You must ship your shiny app inside a docker container,
+    where the app has all the dependencies it needs to run.
+    You can use [muggle](https://maxheld.de/muggle/) (recommended),
+    [rocker/shiny](https://hub.docker.com/r/rocker/shiny)
+    or roll your own.
+- An **azure account** with an active subscription.
+
 ## Usage
 
 You can deploy a shiny app to AAS from CI (GitHub Actions),
@@ -29,7 +39,6 @@ for a quicker turnaround during debugging.
 ### Log In to Azure {.tabset}
 
 You first need to authenticate into Azure to be able to make changes to Azure resources.
-
 
 #### Local (Shell)
 
@@ -87,15 +96,24 @@ Azure's own container registry (ACR).
 If you don't already have an instance,
 [set up a container registry](https://learn.microsoft.com/en-us/azure/container-registry/).
 
-### Prerequisites
+### Login to ACR {.tabset}
 
-- A **dockerised shiny app**.
-    You must ship your shiny app inside a docker container,
-    where the app has all the dependencies it needs to run.
-    You can use [muggle](https://maxheld.de/muggle/) (recommended),
-    [rocker/shiny](https://hub.docker.com/r/rocker/shiny)
-    or roll your own.
-- An **azure account** with an active subscription.
+Log in to ACR, leveraging the above login to Azure.
+This step is necessary to allow `docker` to speak to your ACR instance.
+
+#### Local (Shell)
+
+No extra step necessary.
+
+#### CI (GitHub Actions)
+
+If you're using OIDC (recommended) as per the above,
+give your app `AcrPush` privileges on your registry using Azure's access control.
+
+
+```sh
+az acr login --name <registry-name>
+```
 
 ## Installation
 
