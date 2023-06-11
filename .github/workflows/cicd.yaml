@@ -151,6 +151,6 @@ jobs:
         run: |
           docker pull ghcr.io/${{ github.repository }}/runner:${{ github.sha }}
           docker tag \
-            ghcr.io/${{ github.repository }}/runner:${{ github.sha }}
+            ghcr.io/${{ github.repository }}/runner:${{ github.sha }} \
             portoferraio.azurecr.io/${{ github.repository }}/runner:production
           docker push portoferraio.azurecr.io/${{ github.repository }}/runner:production

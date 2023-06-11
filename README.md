@@ -110,9 +110,16 @@ No extra step necessary.
 If you're using OIDC (recommended) as per the above,
 give your app `AcrPush` privileges on your registry using Azure's access control.
 
-
 ```sh
 az acr login --name <registry-name>
+```
+
+### Push `runner` Image to ACR
+
+Push the image which contains the shiny app (`runner`) to ACR.
+
+```sh
+docker push <registry-name>.azurecr.io/<project-name>/runner:production
 ```
 
 ## Installation
@@ -120,8 +127,8 @@ az acr login --name <registry-name>
 Install the development version from GitHub with:
 
 ```r
-remotes::install_github("dataheld/AzureAppService")
+remotes::install_github("dataheld/azureappservice")
 ```
 
-You need not take on AzureAppService as a runtime dependency (in your `DESCRIPTION`s `Imports` field), because the package is typically only needed during deployment.
+You need not take on azureappservice as a runtime dependency (in your `DESCRIPTION`s `Imports` field), because the package is typically only needed during deployment.
 Consider adding it as an optional `Suggests` dependency, or add it separately to the compute environment from which you deploy.
