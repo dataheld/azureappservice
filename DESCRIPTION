@@ -15,8 +15,8 @@ Description: Deploying shiny applications and other R workloads
     to Azure App Service.
 License: MIT + file LICENSE
 URL: https://maxheld.de/AzureAppService,
-    https://github.com/maxheld83/AzureAppService
-BugReports: https://github.com/maxheld83/AzureAppService/issues
+    https://github.com/dataheld/AzureAppService
+BugReports: https://github.com/dataheld/AzureAppService/issues
 Imports:
     AzureRMR
 Encoding: UTF-8

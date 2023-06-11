@@ -21,7 +21,7 @@ You can use it to deploy a containerised shiny app to the cloud.
 Install the development version from GitHub with:
 
 ```r
-remotes::install_github("maxheld83/AzureAppService")
+remotes::install_github("dataheld/AzureAppService")
 ```
 
 You need not take on AzureAppService as a runtime dependency (in your `DESCRIPTION`s `Imports` field), because the package is typically only needed during deployment.
