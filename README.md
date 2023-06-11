@@ -4,6 +4,15 @@ AzureAppService lets you manage [Azure App Service (AAS)](https://azure.microsof
 
 You can use it to deploy a containerised shiny app to the cloud.
 
+::: {.alert .alert-warning}
+Cloud services such as AAS can rack up unexpected bills,
+if you don't
+[manage costs carefully](https://learn.microsoft.com/en-us/azure/cost-management-billing/).
+If you are not familiar with cloud services,
+or would like a solution with a simpler way to control costs,
+consider Posit's [shinyapps.io](https://www.shinyapps.io).
+:::
+
 ## Usage
 
 You can deploy a shiny app to AAS from CI (GitHub Actions),
@@ -51,6 +60,8 @@ To authenticate via WIF, you need to complete two steps on the Azure side:
     without storing additional secrets on GitHub.
     All federated credentials on the same app registration
     use the same secrets as created in the above.
+
+At 
 
 
 ### Prerequisites
