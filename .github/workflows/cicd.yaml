@@ -150,12 +150,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           logout: false
-      - name: "Retag Runner Image to ACR"
+      - name: "Copy Runner Image to ACR"
         run: |
           docker pull ghcr.io/${{ github.repository }}/runner:${{ github.sha }}
           docker tag \
             ghcr.io/${{ github.repository }}/runner:${{ github.sha }} \
             portoferraio.azurecr.io/${{ github.repository }}/runner:production
-      - name: "Copy Runner Image to ACR"
-        run: |
           docker push portoferraio.azurecr.io/${{ github.repository }}/runner:production
