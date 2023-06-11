@@ -61,7 +61,10 @@ jobs:
             can_push=true
   make-all-in-docker:
     name: "Test, Check, Lint and Document Package"
-    needs: build-and-push-images
+    needs: [
+      build-and-push-images,
+      lint-all
+    ]
     runs-on: ubuntu-20.04
     container:
       image: ghcr.io/${{ github.repository }}/builder:${{ github.sha }}
