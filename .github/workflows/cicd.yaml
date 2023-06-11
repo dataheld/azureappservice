@@ -64,7 +64,7 @@ jobs:
     needs: build-and-push-images
     runs-on: ubuntu-20.04
     container:
-      image: ghcr.io/dataheld/azureappservice/builder:${{ github.sha }}
+      image: ghcr.io/${{ github.repository }}/builder:${{ github.sha }}
     strategy:
       fail-fast: false
       matrix:
@@ -127,10 +127,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-    environment: "production"
+    environment:
+      name: production
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: "Login to Azure"
         uses: azure/login@v1
         with:
@@ -138,8 +137,6 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           allow-no-subscriptions: true
-      - name: Debug Azure
-        run: az account show
       - name: Login to ACR via OIDC
         run: az acr login --name portoferraio
       - name: Log in to GHCR
@@ -149,18 +146,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           logout: false
-      - name: Extract Metadata for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          # image names and tags are actually defined in the bakefile
-          # TODO this should done by metadata-action,
-          # but is currently unsupported
-          images: "i-am-ignored"
-      - name: "Build and Push Images"
+      - name: "Copy Runner Image to ACR"
         # cache-to is disabled below because of #218
         run: |
-          make bake \
-            tag_from_git_sha="${{ github.sha }}" \
-            git_ref_name="${{ github.ref_name }}" \
-            can_push=true
+          docker pull ghcr.io/${{ github.repository }}/runner:${{ github.sha }}
+          docker tag \
+            ghcr.io/${{ github.repository }}/runner:${{ github.sha }}
+            portoferraio.azurecr.io/${{ github.repository }}/runner:production
+          docker push portoferraio.azurecr.io/${{ github.repository }}/runner:production
