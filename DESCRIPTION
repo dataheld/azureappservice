@@ -28,6 +28,7 @@ Suggests:
     checkmate,
     dotenv,
     rlang,
+    rmarkdown,
     servr,
     shiny,
     testthat (>= 3.0.0)

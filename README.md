@@ -1,10 +1,57 @@
 # AzureAppService
 
-AzureAppService lets you manage [Azure App Service](https://azure.microsoft.com/en-us/services/app-service/), a Platform-as-a-Service (PaaS) and Container-as-a-Service (CaaS) from Microsoft.
+AzureAppService lets you manage [Azure App Service (AAS)](https://azure.microsoft.com/en-us/services/app-service/), a Platform-as-a-Service (PaaS) and Container-as-a-Service (CaaS) from Microsoft.
 
 You can use it to deploy a containerised shiny app to the cloud.
 
 ## Usage
+
+You can deploy a shiny app to AAS from CI (GitHub Actions),
+or using your local computer (Shell).
+
+Deploying from CI is recommended to let you reap the benefits of fully
+automated continuous integration and continuous delivery (CI/CD).
+If you deploy from CI, every `git push` to the appropriate branch
+will be deployed to production.
+
+You can use your local shell as backstop or
+for a quicker turnaround during debugging.
+
+### Log In to Azure {.tabset}
+
+You first need to authenticate into Azure to be able to make changes to Azure resources.
+
+
+#### Local (Shell)
+
+[Sign in interactively](https://learn.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
+with Azure CLI.
+
+```sh
+az login
+```
+
+#### CI (GitHub Actions)
+
+Use the [Azure Login GitHub Action](https://github.com/marketplace/actions/azure-login).
+For maximum security and convenience,
+use OpenID Connect (OIDC) based Federated Identity Credentials
+(or Workflow Identify Federation, WIF).
+
+To authenticate via WIF, you need to complete two steps on the Azure side:
+
+1. [Create an *app registration* for GitHub](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust-user-assigned-managed-identity?pivots=identity-wif-mi-methods-azp).
+    You only need *one* app registration for all your deployments from GitHub Actions to Azure.
+    (Though there might be a limit of 20 federated credentials for each app registration).
+1. For each combination of GitHub organisation/repository (`octouser/octoproject`) and environment (say, `production`) create one [federated credential](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust-user-assigned-managed-identity?pivots=identity-wif-mi-methods-azp).
+
+    The values for organization/repository and environment
+    must match those in the GitHub repo from which you want to deploy.
+    You can add several of these federated credentials;
+    without storing additional secrets on GitHub.
+    All federated credentials on the same app registration
+    use the same secrets as created in the above.
+
 
 ### Prerequisites
 
