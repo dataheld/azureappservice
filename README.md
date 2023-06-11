@@ -68,7 +68,7 @@ and cannot do anything on Azure.
 As a result,
 you may get this error message if you run the Azure Login GitHub Action:
 
-> ```
+> ```sh
 > ERROR: (SubscriptionNotFound) The subscription '***' could not be found.`
 > Code: SubscriptionNotFound
 > ```
