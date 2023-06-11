@@ -130,6 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      packages: read
     environment:
       name: production
     steps:
