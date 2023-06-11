@@ -159,7 +159,7 @@ EXPOSE 3840
 # port for shiny, passed to shiny in below serve_all
 EXPOSE 3838
 ENTRYPOINT ["Rscript", "-e"]
-CMD ["AzureAppService::serve_all()"]
+CMD ["azureappservice::serve_all()"]
 HEALTHCHECK --start-period=5s --interval=10s --timeout=10s \
   CMD curl --fail http://localhost:3838/ || exit 1
 # used for setting provenance inside the container

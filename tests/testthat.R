@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(AzureAppService)
+library(azureappservice)
 
-test_check("AzureAppService")
+test_check("azureappservice")

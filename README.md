@@ -1,6 +1,6 @@
-# AzureAppService
+# azureappservice
 
-AzureAppService lets you manage [Azure App Service (AAS)](https://azure.microsoft.com/en-us/services/app-service/), a Platform-as-a-Service (PaaS) and Container-as-a-Service (CaaS) from Microsoft.
+azureappservice lets you manage [Azure App Service (AAS)](https://azure.microsoft.com/en-us/services/app-service/), a Platform-as-a-Service (PaaS) and Container-as-a-Service (CaaS) from Microsoft.
 
 You can use it to deploy a containerised shiny app to the cloud.
 

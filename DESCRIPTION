@@ -1,4 +1,4 @@
-Package: AzureAppService
+Package: azureappservice
 Title: Deploy applications to Azure App Service
 Version: 0.0.0.9000
 Authors@R:
@@ -14,9 +14,9 @@ Authors@R:
 Description: Deploying shiny applications and other R workloads
     to Azure App Service.
 License: MIT + file LICENSE
-URL: https://maxheld.de/AzureAppService,
-    https://github.com/dataheld/AzureAppService
-BugReports: https://github.com/dataheld/AzureAppService/issues
+URL: https://maxheld.de/azureappservice,
+    https://github.com/dataheld/azureappservice
+BugReports: https://github.com/dataheld/azureappservice/issues
 Imports:
     AzureRMR
 Encoding: UTF-8
