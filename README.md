@@ -80,6 +80,13 @@ If you want to run the Azure Login GitHub Action as is,
 pass the `allow-no-subscriptions: true` argument.
 :::
 
+### Create an Azure Container Registry (One-Time)
+
+The easiest and safest way for AAS to retrieve container images is from
+Azure's own container registry (ACR).
+If you don't already have an instance,
+[set up a container registry](https://learn.microsoft.com/en-us/azure/container-registry/).
+
 ### Prerequisites
 
 - A **dockerised shiny app**.
