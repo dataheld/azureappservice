@@ -138,8 +138,10 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           allow-no-subscriptions: true
+      - name: Debug Azure
+        run: az account show
       - name: Login to ACR via OIDC
-        run: az acr login --name fpshinyregistry
+        run: az acr login --name portoferraio
       - name: Log in to GHCR
         uses: docker/login-action@v2
         with:
@@ -147,3 +149,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           logout: false
+      - name: Extract Metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # image names and tags are actually defined in the bakefile
+          # TODO this should done by metadata-action,
+          # but is currently unsupported
+          images: "i-am-ignored"
+      - name: "Build and Push Images"
+        # cache-to is disabled below because of #218
+        run: |
+          make bake \
+            tag_from_git_sha="${{ github.sha }}" \
+            git_ref_name="${{ github.ref_name }}" \
+            can_push=true
