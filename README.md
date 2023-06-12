@@ -183,13 +183,6 @@ Azure Resource Manager (ARM) bicep template included with this package (`inst/ar
     place it inside `inst/arm`.
 2. Copy `template.parameters.json` and replace the values.
 
-::: {.alert .alert-info}
-If you'd rather use the portal.azure.com UI to create the web app,
-please peruse the template and parameters files to find the appropriate setting.
-In general,
-using ARM templates is a more robust and reproducible way to deploy.
-:::
-
 #### Local Shell
 
 ```sh
