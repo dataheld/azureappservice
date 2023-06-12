@@ -25,10 +25,15 @@ Roxygen: list(markdown = TRUE)
 SystemRequirements: Azure CLI (>= 2.9) (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 Config/testthat/edition: 3
 Suggests: 
+    bsicons,
+    bslib,
     checkmate,
     dotenv,
+    glue,
+    lubridate,
     rlang,
     rmarkdown,
     servr,
     shiny,
     testthat (>= 3.0.0)
+RoxygenNote: 7.2.3
