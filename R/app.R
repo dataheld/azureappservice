@@ -28,8 +28,6 @@ get_port_safely <- function(preferred, host) {
   invisible(actual)
 }
 
-test_fun <- function() AzureRMR::is_url()
-
 #' Test app
 #' @noRd
 app <- function() {
