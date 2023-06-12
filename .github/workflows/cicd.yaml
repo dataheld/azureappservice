@@ -133,7 +133,7 @@ jobs:
       packages: read
     environment:
       name: production
-      url: dataheld-azureappservice.azurewebsites.net
+      url: https://dataheld-azureappservice.azurewebsites.net
     steps:
       - name: "Login to Azure"
         uses: azure/login@v1
