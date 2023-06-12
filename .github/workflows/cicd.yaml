@@ -163,7 +163,7 @@ jobs:
       - name: "Create Web App"
         uses: azure/arm-deploy@v1
         with:
-          scope: resource-group
+          scope: resourcegroup
           resourceGroupName: github-action-arm-rg
           template: ./inst/arm/template.bicep
           parameters: ./inst/arm/template.parameters.json
