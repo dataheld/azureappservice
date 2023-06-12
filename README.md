@@ -89,12 +89,21 @@ If you want to run the Azure Login GitHub Action as is,
 pass the `allow-no-subscriptions: true` argument.
 :::
 
-### Create an Azure Container Registry (One-Time)
+### Create an Azure Container Registry (Once)
 
 The easiest and safest way for AAS to retrieve container images is from
 Azure's own container registry (ACR).
 If you don't already have an instance,
 [set up a container registry](https://learn.microsoft.com/en-us/azure/container-registry/).
+
+::: {.alert .alert-info}
+There is nothing specifically shiny-related about the required ACR instance,
+and any configuration will do.
+Consequently, no ARM template is included here.
+If your organisation already has an ACR instance,
+please use that
+or defer to your organisations needs and policies in configuring a new one.
+:::
 
 ### Login to ACR {.tabset}
 
@@ -114,13 +123,99 @@ give your app `AcrPush` privileges on your registry using Azure's access control
 az acr login --name <registry-name>
 ```
 
-### Push `runner` Image to ACR
+### Push `runner` Image to ACR (Every Commit)
 
 Push the image which contains the shiny app (`runner`) to ACR.
 
 ```sh
 docker push <registry-name>.azurecr.io/<project-name>/runner:production
 ```
+
+### Create an Azure App Service Plan (Once)
+
+The [Azure App Service plan (ASP)](https://learn.microsoft.com/en-us/azure/app-service/)
+is the compute resource running the container with your shiny app.
+Loosely,
+it is the *host virtual machine (VM)* on which `docker run` is executed.
+
+Create an ASP with Linux as the host operating system.
+
+::: {.alert .alert-info}
+Like the ACR instance above,
+Shiny places no special demands on the ASP.
+The best SKU and other settings depend on your organisations policies
+and individual use case.
+:::
+
+Contra other Container-as-a-Service (CaaS) offerings,
+Azure allows you to run entirely separate (dockerised) web apps
+inside *one* ASP, sharing compute resources.
+For example, you could run several unrelated shiny apps in the same ASP.
+
+::: {.alert .alert-info}
+Hosting several shiny apps on the same ASP can be a cost-effective way
+to host shiny,
+especially when you expect uncorrelated and limited traffic on each of the apps.
+
+If you deploy several shiny apps to the same ASP,
+the apps are isolated in their own docker containers.
+For example, if the R session of one shiny app is busy,
+the other apps on the same ASP should still be responsive.
+
+However,
+these apps and their containers still share the same physical resources,
+and high resource use of one app may spill over into another.
+Memory usage in particular can be a bottleneck on the lower-powered ASP SKUs;
+if one shiny app exhausts the ASP's memory,
+other apps may become unavailable.
+:::
+
+### Create a Web App (Once per App)
+
+You're now ready to create the (dockerised) web app
+which will drive your shiny app.
+
+The easiest way to make sure all the settings are correct is to use the
+Azure Resource Manager (ARM) template included with this package.
+
+### Update the Web App (Every Commit) {.tabset}
+
+To put the latest version of your dockerised shiny app in production,
+deploy the appropriate image tag (again).
+
+#### Local (Shell)
+
+```sh
+az webapp restart --name MyWebapp --resource-group MyResourceGroup
+```
+
+For example,
+
+```sh
+az webapp restart --name dataheld-azureappservice --resource-group marketing
+```
+
+#### CI (GitHub Actions)
+
+Use the [webapps-deploy](https://github.com/Azure/webapps-deploy) GitHub Actions.
+
+For an example, see `.github/workflows/cicd.yaml` in this package.
+
+
+### Visit the Live Shiny App {.tabset}
+
+#### Local (Shell)
+
+For example:
+
+```sh
+az webapp browse --name dataheld-azureappservice --resource-group marketing
+```
+
+#### CI (GitHub Actions)
+
+Look for the `production` environment in your GitHub repo
+to find the URL under which the web app is live.
 
 ## Installation
 
