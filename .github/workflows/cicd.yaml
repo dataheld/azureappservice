@@ -158,8 +158,8 @@ jobs:
             ghcr.io/${{ github.repository }}/runner:${{ github.sha }} \
             portoferraio.azurecr.io/${{ github.repository }}/runner:production
           docker push portoferraio.azurecr.io/${{ github.repository }}/runner:production
-      - name: "Update App"
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'dataheld-azureappservice'
-          images: portoferraio.azurecr.io/${{ github.repository }}/runner:production
+      - name: "Restart App"
+        run: |
+          az webapp restart \
+            --name dataheld-azureappservice \
+            --resource-group marketing

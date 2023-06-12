@@ -178,12 +178,11 @@ which will drive your shiny app.
 The easiest way to make sure all the settings are correct is to use the
 Azure Resource Manager (ARM) template included with this package.
 
-### Update the Web App (Every Commit) {.tabset}
+### Update the Web App (Every Commit)
 
 To put the latest version of your dockerised shiny app in production,
-deploy the appropriate image tag (again).
-
-#### Local (Shell)
+simply restart the web app;
+it will then pull the current image under the appropriate tag.
 
 ```sh
 az webapp restart --name MyWebapp --resource-group MyResourceGroup
@@ -194,13 +193,6 @@ For example,
 ```sh
 az webapp restart --name dataheld-azureappservice --resource-group marketing
 ```
-
-#### CI (GitHub Actions)
-
-Use the [webapps-deploy](https://github.com/Azure/webapps-deploy) GitHub Actions.
-
-For an example, see `.github/workflows/cicd.yaml` in this package.
-
 
 ### Visit the Live Shiny App {.tabset}
 
