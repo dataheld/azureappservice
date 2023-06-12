@@ -178,11 +178,13 @@ which will drive your shiny app.
 The easiest way to make sure all the settings are correct is to use the
 Azure Resource Manager (ARM) template included with this package.
 
-### Update the Web App (Every Commit)
+### Update the Web App (Every Commit) {.tabset}
 
 To put the latest version of your dockerised shiny app in production,
 simply restart the web app;
 it will then pull the current image under the appropriate tag.
+
+#### Local Shell
 
 ```sh
 az webapp restart --name MyWebapp --resource-group MyResourceGroup
@@ -192,6 +194,25 @@ For example,
 
 ```sh
 az webapp restart --name dataheld-azureappservice --resource-group marketing
+```
+
+#### CI (GitHub Actions)
+
+Give the above created app registration for GitHub Actions write
+privileges on the web app using the web apps access control (IAM) settings.
+Choose `Contributor` as a role.
+
+You can then run the same command as in your shell;
+Azure CLI is already installed on most GitHub runners.
+
+For example:
+
+```yaml
+- name: "Restart App"
+        run: |
+          az webapp restart \
+            --name dataheld-azureappservice \
+            --resource-group marketing
 ```
 
 ### Visit the Live Shiny App {.tabset}
