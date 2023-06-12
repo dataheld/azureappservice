@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "name": {
+      "value": "dataheld-azureappservice"
+    },
+    "location": {
+      "value": "West Europe"
+    },
+    "hostingPlanName": {
+      "value": "amalfi"
+    },
+    "serverFarmResourceGroup": {
+      "value": "marketing"
+    },
+    "linuxFxVersion": {
+      "value": "DOCKER|portoferraio.azurecr.io/dataheld/azureappservice/runner:production"
+    },
+    "dockerRegistryUrl": {
+      "value": "https://portoferraio.azurecr.io"
+    }
+  }
+}

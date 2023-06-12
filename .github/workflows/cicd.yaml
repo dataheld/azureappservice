@@ -135,6 +135,8 @@ jobs:
       name: production
       url: https://dataheld-azureappservice.azurewebsites.net
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: "Login to Azure"
         uses: azure/login@v1
         with:
@@ -158,6 +160,15 @@ jobs:
             ghcr.io/${{ github.repository }}/runner:${{ github.sha }} \
             portoferraio.azurecr.io/${{ github.repository }}/runner:production
           docker push portoferraio.azurecr.io/${{ github.repository }}/runner:production
+      - name: "Create Web App"
+        uses: azure/arm-deploy@v1
+        with:
+          scope: resource-group
+          resourceGroupName: github-action-arm-rg
+          template: ./inst/arm/template.bicep
+          parameters: ./inst/arm/template.parameters.json
+          deploymentMode: Complete
+          additionalArguments: "--rollback-on-error"
       - name: "Restart App"
         run: |
           az webapp restart \

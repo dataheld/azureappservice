@@ -170,13 +170,49 @@ if one shiny app exhausts the ASP's memory,
 other apps may become unavailable.
 :::
 
-### Create a Web App (Once per App)
+### Create a Web App (Once per App) {.tabset}
 
 You're now ready to create the (dockerised) web app
 which will drive your shiny app.
 
 The easiest way to make sure all the settings are correct is to use the
-Azure Resource Manager (ARM) template included with this package.
+Azure Resource Manager (ARM) bicep template included with this package (`inst/arm`).
+
+1. Copy `template.bicep` to the repository with your shiny app.
+    To avoid `R CMD check` warning messages,
+    place it inside `inst/arm`.
+2. Copy `template.parameters.json` and replace the values.
+
+::: {.alert .alert-info}
+If you'd rather use the portal.azure.com UI to create the web app,
+please peruse the template and parameters files to find the appropriate setting.
+In general,
+using ARM templates is a more robust and reproducible way to deploy.
+:::
+
+#### Local Shell
+
+```sh
+az deployment group create \
+  --resource-group marketing \
+  --template-file inst/arm/template.bicep \
+  --parameters inst/arm/template.parameters.json \
+  --mode Complete \
+  --rollback-on-error
+```
+
+For extra security,
+you will have to enter your Azure subscription at the prompt.
+
+#### CI (GitHub Actions)
+
+Use the [arm-deploy](https://github.com/Azure/arm-deploy) GitHub Action
+to deploy.
+See `.github/workflows/cicd.yaml` for an example.
+
+There's no need to recreate the (identical) app in CI on every commit,
+but it's also harmless to do so.
+Recreating the app on every commit ensures that the settings
 
 ### Update the Web App (Every Commit) {.tabset}
 
