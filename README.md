@@ -189,9 +189,7 @@ Azure Resource Manager (ARM) bicep template included with this package (`inst/ar
 az deployment group create \
   --resource-group marketing \
   --template-file inst/arm/template.bicep \
-  --parameters inst/arm/template.parameters.json \
-  --mode Complete \
-  --rollback-on-error
+  --parameters inst/arm/template.parameters.json
 ```
 
 For extra security,

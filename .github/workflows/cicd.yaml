@@ -167,7 +167,6 @@ jobs:
           resourceGroupName: marketing
           template: ./inst/arm/template.bicep
           parameters: ./inst/arm/template.parameters.json subscriptionId=${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          deploymentMode: Complete
       - name: "Restart App"
         run: |
           az webapp restart \
