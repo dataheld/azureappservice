@@ -203,7 +203,37 @@ See `.github/workflows/cicd.yaml` for an example.
 
 There's no need to recreate the (identical) app in CI on every commit,
 but it's also harmless to do so.
-Recreating the app on every commit ensures that the settings
+Recreating the app on every commit ensures that the settings are under version
+control (infrastructure-as-code).
+
+::: {.alert .alert-warning}
+If you want deploy the ARM template from GitHub Actions (recommended),
+the app registration created in the above for GitHub Actions
+must receive `Contributor` privileges on the resource group
+or ASP to which you want to deploy your app.
+This extends a fairly elevaned privilege to grant GitHub Actions on Azure.
+Make sure to follow
+[best practices for information security](https://docs.github.com/en/code-security)
+to safeguard your GitHub account.
+:::
+
+::: {.alert .alert-info}
+Hosting several shiny apps on the same ASP can be a cost-effective way
+to host shiny,
+especially when you expect uncorrelated and limited traffic on each of the apps.
+
+If you deploy several shiny apps to the same ASP,
+the apps are isolated in their own docker containers.
+For example, if the R session of one shiny app is busy,
+the other apps on the same ASP should still be responsive.
+
+However,
+these apps and their containers still share the same physical resources,
+and high resource use of one app may spill over into another.
+Memory usage in particular can be a bottleneck on the lower-powered ASP SKUs;
+if one shiny app exhausts the ASP's memory,
+other apps may become unavailable.
+:::
 
 ### Update the Web App (Every Commit) {.tabset}
 
