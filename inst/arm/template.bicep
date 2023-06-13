@@ -13,7 +13,6 @@ resource name_resource 'Microsoft.Web/sites@2022-09-01' = {
   location: location
   tags: {}
   properties: {
-    name: name
     siteConfig: {
       appSettings: [
         {

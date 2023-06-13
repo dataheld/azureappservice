@@ -167,6 +167,7 @@ jobs:
           resourceGroupName: marketing
           template: ./inst/arm/template.bicep
           parameters: ./inst/arm/template.parameters.json subscriptionId=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          failOnStdErr: false
       - name: "Restart App"
         run: |
           az webapp restart \
